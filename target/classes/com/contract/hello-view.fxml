@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="BOTTOM_RIGHT" prefHeight="633.0" prefWidth="682.0" spacing="20.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.contract.FormController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <Button fx:id="templateButton" mnemonicParsing="false" onAction="#onTemplateButtonClick" text="Выбор шаблона DOCX" />
+        <Button fx:id="listButton" mnemonicParsing="false" onAction="#onListButtonClick" text="Выбор списка CSV" />
+       <Button fx:id="saveButton" alignment="BOTTOM_RIGHT" cacheShape="false" centerShape="false" focusTraversable="false" onAction="#onSaveButtonClick" text="Сохранить документ" />
+   
+       <Label fx:id="onSaveText" />
+      <!--<Button fx:id="excelTest" mnemonicParsing="false" onAction="#onExcelTest" text="Excel Test" />-->
+    </ToolBar>
+   <TableView fx:id="tableTemplate" onMouseClicked="#onSelected" prefHeight="200.0" prefWidth="200.0">
+      <columnResizePolicy>
+         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+      </columnResizePolicy>
+      <columns>
+         <TableColumn fx:id="tableId" prefWidth="30.0" text="№" />
+         <TableColumn fx:id="tableFirstName" prefWidth="75.0" text="Фамилия" />
+         <TableColumn fx:id="tableSecondName" prefWidth="75.0" text="Имя" />
+         <TableColumn fx:id="tableFathersName" prefWidth="75.0" text="Отчество" />
+         <TableColumn fx:id="tableBirthDate" prefWidth="75.0" text="Дата рождения" />
+         <TableColumn fx:id="tableBirthPlace" prefWidth="75.0" text="Место рождения" />
+         <TableColumn fx:id="tableFlat" prefWidth="75.0" text="№ Квартиры" />
+         <TableColumn fx:id="tableSquare" prefWidth="75.0" text="Площадь" />
+         <TableColumn fx:id="tableSertNumber" prefWidth="75.0" text="№ свидетельства" />
+         <TableColumn fx:id="tableRegDate" prefWidth="75.0" text="Дата регистрации" />
+          <TableColumn fx:id="tablePassportSerie" prefWidth="75.0" text="Серия паспорта" />
+          <TableColumn fx:id="tablePassportNumber" prefWidth="75.0" text="№ паспорта" />
+          <TableColumn fx:id="tablePassportOutput" prefWidth="75.0" text="Дата выдачи" />
+          <TableColumn fx:id="tablePassportCode" prefWidth="75.0" text="Код подразделения" />
+          <TableColumn fx:id="tableRegAdress" prefWidth="75.0" text="Адрес регистрации" />
+          <TableColumn fx:id="tableLiveAdress" prefWidth="75.0" text="Адрес проживания" />
+          <TableColumn fx:id="tablePhone" prefWidth="75.0" text="№ телефона" />
+          <TableColumn fx:id="tableMail" prefWidth="75.0" text="E-mail" />
+          <TableColumn fx:id="tableGasService" prefWidth="75.0" text="ТО по газу" />
+      </columns>
+   </TableView>
+   <Label text="Шаблон" />
+   <TextArea fx:id="templateText" scaleShape="false" wrapText="true">
+      <opaqueInsets>
+         <Insets />
+      </opaqueInsets></TextArea>
+   <Label text="Готовый документ" />
+   <TextArea fx:id="resultText" prefHeight="200.0" prefWidth="200.0" scaleShape="false" wrapText="true" />
+</VBox>

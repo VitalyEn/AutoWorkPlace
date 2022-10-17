@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="Contract">
+    <output-path>$PROJECT_DIR$/out/artifacts/Contract</output-path>
+    <root id="root">
+      <element id="archive" name="Contract.jar">
+        <element id="module-output" name="AutoWorkPlace" />
+      </element>
+    </root>
+  </artifact>
+</component>
