@@ -1,10 +1,16 @@
 package com.autoWorkPlace;
 
+import com.autoWorkPlace.Accaunt;
+import com.autoWorkPlace.ExcelDocument;
+import com.autoWorkPlace.WordDocument;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import java.io.IOException;
@@ -13,7 +19,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class FormController implements Initializable {
-    public ObservableList<Accaunt> opData = FXCollections.observableArrayList();
+    public ObservableList<com.autoWorkPlace.Accaunt> opData = FXCollections.observableArrayList();
     private Integer id;
     private String firstName;
     private String secondName;
@@ -37,55 +43,55 @@ public class FormController implements Initializable {
     @FXML
     public Label onSaveText;
     @FXML
-    public TableView<Accaunt> tableTemplate;
+    public TableView<com.autoWorkPlace.Accaunt> tableTemplate;
     @FXML
-    public TableColumn<Accaunt,Integer> tableId;
+    public TableColumn<com.autoWorkPlace.Accaunt,Integer> tableId;
     @FXML
-    public TableColumn<Accaunt,String> tableFirstName;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableFirstName;
     @FXML
-    public TableColumn<Accaunt,String> tableSecondName;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableSecondName;
     @FXML
-    public TableColumn<Accaunt,String> tableFathersName;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableFathersName;
     @FXML
-    public TableColumn<Accaunt,String> tableBirthDate;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableBirthDate;
     @FXML
-    public TableColumn<Accaunt,String> tableBirthPlace;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableBirthPlace;
     @FXML
-    public TableColumn<Accaunt,String> tableFlat;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableFlat;
     @FXML
-    public TableColumn<Accaunt,String> tableSquare;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableSquare;
     @FXML
-    public TableColumn<Accaunt,String> tableSertNumber;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableSertNumber;
     @FXML
-    public TableColumn<Accaunt,String> tableRegDate;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableRegDate;
     @FXML
-    public TableColumn<Accaunt,String> tablePassportSerie;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePassportSerie;
     @FXML
-    public TableColumn<Accaunt,String> tablePassportNumber;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePassportNumber;
     @FXML
-    public TableColumn<Accaunt,String> tablePassportOutput;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePassportOutput;
     @FXML
-    public TableColumn<Accaunt,String> tablePassportCode;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePassportCode;
     @FXML
-    public TableColumn<Accaunt,String> tableRegAdress;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableRegAdress;
     @FXML
-    public TableColumn<Accaunt,String> tableLiveAdress;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableLiveAdress;
     @FXML
-    public TableColumn<Accaunt,String> tablePhone;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePhone;
     @FXML
-    public TableColumn<Accaunt,String> tableMail;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableMail;
     @FXML
-    public TableColumn<Accaunt,String> tableGasService;
+    public TableColumn<com.autoWorkPlace.Accaunt,String> tableGasService;
 
     @FXML
-    TableColumn<Accaunt, String> tableColumn;
+    TableColumn<com.autoWorkPlace.Accaunt, String> tableColumn;
     @FXML
     private TextArea resultText;
     @FXML
     private TextArea templateText;
 
-    private ExcelDocument exelFile;
-    private WordDocument doc;
+    private com.autoWorkPlace.ExcelDocument exelFile;
+    private com.autoWorkPlace.WordDocument doc;
     private ArrayList<String> dataTemplate;
     private ArrayList<String> columnNames;
     private ArrayList<String> dataList;
@@ -143,10 +149,11 @@ public class FormController implements Initializable {
     private void tableLoad() {
         // Открытие нового докусента Exel (только первый лист!)
         if (tableTemplate.getItems() != null) tableTemplate.getItems().clear();
-        ExcelDocument exel = new ExcelDocument();
+        com.autoWorkPlace.ExcelDocument exel = new ExcelDocument();
         int row = 0;
-        while (exel.readRow(row, rowSize) != null){
-            dataTemplate = exel.readRow(row,rowSize);
+        while (exel.readRow(row) != null){
+            dataTemplate = exel.readRow(row);
+            //System.out.println(dataTemplate.toString());
             this.id = row;
             this.firstName = dataTemplate.get(0);
             this.secondName = dataTemplate.get(1);
