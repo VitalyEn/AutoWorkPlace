@@ -21,6 +21,7 @@
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
       <columns>
+          <!--
          <TableColumn fx:id="tableId" prefWidth="30.0" text="№" />
          <TableColumn fx:id="tableFirstName" prefWidth="75.0" text="Фамилия" />
          <TableColumn fx:id="tableSecondName" prefWidth="75.0" text="Имя" />
@@ -40,6 +41,7 @@
           <TableColumn fx:id="tablePhone" prefWidth="75.0" text="№ телефона" />
           <TableColumn fx:id="tableMail" prefWidth="75.0" text="E-mail" />
           <TableColumn fx:id="tableGasService" prefWidth="75.0" text="ТО по газу" />
+          -->
       </columns>
    </TableView>
    <Label text="Шаблон" />

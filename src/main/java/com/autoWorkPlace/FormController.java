@@ -16,6 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class FormController implements Initializable {
@@ -39,11 +40,14 @@ public class FormController implements Initializable {
     private String phone;
     private String mail;
     private String gasService;
+    private HashMap<String, Object> properties = new HashMap<>();
 
     @FXML
     public Label onSaveText;
     @FXML
     public TableView<com.autoWorkPlace.Accaunt> tableTemplate;
+    @FXML
+    TableColumn<Accaunt, String> column;
     @FXML
     public TableColumn<com.autoWorkPlace.Accaunt,Integer> tableId;
     @FXML
@@ -101,7 +105,7 @@ public class FormController implements Initializable {
     //Инициализация при загрузке формы
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        tableId.setCellValueFactory(new PropertyValueFactory<>("id"));
+       /* tableId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         tableSecondName.setCellValueFactory(new PropertyValueFactory<>("secondName"));
         tableFathersName.setCellValueFactory(new PropertyValueFactory<>("fathersName"));
@@ -120,6 +124,7 @@ public class FormController implements Initializable {
         tablePhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
         tableMail.setCellValueFactory(new PropertyValueFactory<>("mail"));
         tableGasService.setCellValueFactory(new PropertyValueFactory<>("gasService"));
+        */
     }
 
     @FXML
@@ -150,9 +155,29 @@ public class FormController implements Initializable {
         // Открытие нового докусента Exel (только первый лист!)
         if (tableTemplate.getItems() != null) tableTemplate.getItems().clear();
         com.autoWorkPlace.ExcelDocument exel = new ExcelDocument();
-        int row = 0;
+        int row = 4;
+        ArrayList tableHeader = exel.readRow(0);
+      //  System.out.println(tableHeader);
+        for (int i = 0; i < tableHeader.size(); i++){
+            //System.out.println(tableHeader.get(i).toString());
+            column = new TableColumn<>();
+            column.setCellValueFactory(new PropertyValueFactory<>(tableHeader.get(i).toString()));
+            tableTemplate.getColumns().add(i,column);
+            tableTemplate.getColumns().get(i).setText(tableHeader.get(i).toString());
+        }
+
+        //this.id = row;
+        //tableTemplate.getColumns().add(0,tableId);
+
         while (exel.readRow(row) != null){
             dataTemplate = exel.readRow(row);
+           // System.out.println(dataTemplate.toString());
+
+            for (int i = 1; i < tableHeader.size(); i++) {
+                this.properties.put("ee","ff");
+              //  System.out.println(properties.toString());
+            }
+            /*
             //System.out.println(dataTemplate.toString());
             this.id = row;
             this.firstName = dataTemplate.get(0);
@@ -173,33 +198,21 @@ public class FormController implements Initializable {
             this.phone = dataTemplate.get(15);
             this.mail = dataTemplate.get(16);
             this.gasService = dataTemplate.get(17);
-
+*/
             initData();
+            for(int i = 0; i < tableHeader.size(); i++){
+
+
+            }
             tableTemplate.setItems(opData);
+
             row++;
         }
     }
 
     private void initData() {
-        opData.add(new Accaunt(id,
-                firstName,
-                secondName,
-                fathersName,
-                birthDate,
-                birthPlace,
-                flat,
-                square,
-                sertNumber,
-                regDate,
-                passportSerie,
-                passportNumber,
-                passportOutput,
-                passportCode,
-                regAdress,
-                liveAdress,
-                phone,
-                mail,
-                gasService));
+
+        opData.add(new Accaunt(properties));
     }
 
 
