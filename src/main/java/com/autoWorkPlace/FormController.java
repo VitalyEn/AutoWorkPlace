@@ -1,8 +1,5 @@
 package com.autoWorkPlace;
 
-import com.autoWorkPlace.Accaunt;
-import com.autoWorkPlace.ExcelDocument;
-import com.autoWorkPlace.WordDocument;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -27,27 +24,21 @@ public class FormController implements Initializable {
     private String fathersName;
     private String birthDate;
     private String birthPlace;
+    private String street;
+    private String house;
+    private String block;
     private String flat;
     private String square;
-    private String sertNumber;
-    private String regDate;
-    private String passportSerie;
-    private String passportNumber;
-    private String passportOutput;
-    private String passportCode;
-    private String regAdress;
-    private String liveAdress;
-    private String phone;
-    private String mail;
-    private String gasService;
-    private HashMap<String, Object> properties = new HashMap<>();
+    private String other;
+
+    private HashMap<String, Object> properties;
 
     @FXML
     public Label onSaveText;
     @FXML
     public TableView<com.autoWorkPlace.Accaunt> tableTemplate;
     @FXML
-    TableColumn<Accaunt, String> column;
+    public TableColumn<com.autoWorkPlace.Accaunt, String> column;
     @FXML
     public TableColumn<com.autoWorkPlace.Accaunt,Integer> tableId;
     @FXML
@@ -61,31 +52,17 @@ public class FormController implements Initializable {
     @FXML
     public TableColumn<com.autoWorkPlace.Accaunt,String> tableBirthPlace;
     @FXML
+    public TableColumn<Accaunt,String> tableStreet;
+    @FXML
+    public TableColumn<Accaunt,String> tableHouse;
+    @FXML
+    public TableColumn<Accaunt,String> tableBlock;
+    @FXML
     public TableColumn<com.autoWorkPlace.Accaunt,String> tableFlat;
     @FXML
     public TableColumn<com.autoWorkPlace.Accaunt,String> tableSquare;
     @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tableSertNumber;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tableRegDate;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePassportSerie;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePassportNumber;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePassportOutput;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePassportCode;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tableRegAdress;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tableLiveAdress;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tablePhone;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tableMail;
-    @FXML
-    public TableColumn<com.autoWorkPlace.Accaunt,String> tableGasService;
+    public TableColumn<Accaunt,String> tableOther;
 
     @FXML
     TableColumn<com.autoWorkPlace.Accaunt, String> tableColumn;
@@ -96,35 +73,30 @@ public class FormController implements Initializable {
 
     private com.autoWorkPlace.ExcelDocument exelFile;
     private com.autoWorkPlace.WordDocument doc;
+    @FXML
+    private ArrayList<TableColumn<com.autoWorkPlace.Accaunt,String>> columns;
+    private ArrayList<String> tableHeader;
     private ArrayList<String> dataTemplate;
     private ArrayList<String> columnNames;
     private ArrayList<String> dataList;
-    private int rowSize = 18;
+    private int rowSize;
 
 
     //Инициализация при загрузке формы
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-       /* tableId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        tableId.setCellValueFactory(new PropertyValueFactory<>("id"));
         tableFirstName.setCellValueFactory(new PropertyValueFactory<>("firstName"));
         tableSecondName.setCellValueFactory(new PropertyValueFactory<>("secondName"));
         tableFathersName.setCellValueFactory(new PropertyValueFactory<>("fathersName"));
         tableBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
         tableBirthPlace.setCellValueFactory(new PropertyValueFactory<>("birthPlace"));
+        tableStreet.setCellValueFactory(new PropertyValueFactory<>("street"));
+        tableHouse.setCellValueFactory(new PropertyValueFactory<>("house"));
+        tableBlock.setCellValueFactory(new PropertyValueFactory<>("block"));
         tableFlat.setCellValueFactory(new PropertyValueFactory<>("flat"));
         tableSquare.setCellValueFactory(new PropertyValueFactory<>("square"));
-        tableSertNumber.setCellValueFactory(new PropertyValueFactory<>("sertNumber"));
-        tableRegDate.setCellValueFactory(new PropertyValueFactory<>("regDate"));
-        tablePassportSerie.setCellValueFactory(new PropertyValueFactory<>("passportSerie"));
-        tablePassportNumber.setCellValueFactory(new PropertyValueFactory<>("passportNumber"));
-        tablePassportOutput.setCellValueFactory(new PropertyValueFactory<>("passportOutput"));
-        tablePassportCode.setCellValueFactory(new PropertyValueFactory<>("passportCode"));
-        tableRegAdress.setCellValueFactory(new PropertyValueFactory<>("regAdress"));
-        tableLiveAdress.setCellValueFactory(new PropertyValueFactory<>("liveAdress"));
-        tablePhone.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        tableMail.setCellValueFactory(new PropertyValueFactory<>("mail"));
-        tableGasService.setCellValueFactory(new PropertyValueFactory<>("gasService"));
-        */
+        tableOther.setCellValueFactory(new PropertyValueFactory<>("other"));
     }
 
     @FXML
@@ -152,67 +124,55 @@ public class FormController implements Initializable {
     }
     //Загрузка таблицы
     private void tableLoad() {
+
+        columns = new ArrayList<>();
         // Открытие нового докусента Exel (только первый лист!)
         if (tableTemplate.getItems() != null) tableTemplate.getItems().clear();
         com.autoWorkPlace.ExcelDocument exel = new ExcelDocument();
-        int row = 4;
-        ArrayList tableHeader = exel.readRow(0);
-      //  System.out.println(tableHeader);
-        for (int i = 0; i < tableHeader.size(); i++){
-            //System.out.println(tableHeader.get(i).toString());
-            column = new TableColumn<>();
-            column.setCellValueFactory(new PropertyValueFactory<>(tableHeader.get(i).toString()));
-            tableTemplate.getColumns().add(i,column);
-            tableTemplate.getColumns().get(i).setText(tableHeader.get(i).toString());
-        }
-
-        //this.id = row;
-        //tableTemplate.getColumns().add(0,tableId);
+        int row = 1;
+        tableHeader = exel.readRow(0);
+        rowSize = tableHeader.size();
 
         while (exel.readRow(row) != null){
+            String column10 = "";
             dataTemplate = exel.readRow(row);
-           // System.out.println(dataTemplate.toString());
-
-            for (int i = 1; i < tableHeader.size(); i++) {
-                this.properties.put("ee","ff");
-              //  System.out.println(properties.toString());
+            for (int i = 10; i < rowSize; i++){
+                column10 = column10 + " / " + dataTemplate.get(i);
             }
-            /*
-            //System.out.println(dataTemplate.toString());
+           // System.out.println(dataTemplate.toString());
+properties = new HashMap<>();
             this.id = row;
             this.firstName = dataTemplate.get(0);
             this.secondName = dataTemplate.get(1);
             this.fathersName = dataTemplate.get(2);
             this.birthDate = dataTemplate.get(3);
             this.birthPlace = dataTemplate.get(4);
-            this.flat = dataTemplate.get(5);
-            this.square = dataTemplate.get(6);
-            this.sertNumber = dataTemplate.get(7);
-            this.regDate = dataTemplate.get(8);
-            this.passportSerie = dataTemplate.get(9);
-            this.passportNumber = dataTemplate.get(10);
-            this.passportOutput = dataTemplate.get(11);
-            this.passportCode = dataTemplate.get(12);
-            this.regAdress = dataTemplate.get(13);
-            this.liveAdress = dataTemplate.get(14);
-            this.phone = dataTemplate.get(15);
-            this.mail = dataTemplate.get(16);
-            this.gasService = dataTemplate.get(17);
-*/
+            this.street = dataTemplate.get(5);
+            this.house = dataTemplate.get(6);
+            this.block = dataTemplate.get(7);
+            this.flat = dataTemplate.get(8);
+            this.square = dataTemplate.get(9);
+            this.other = column10; // Временно!
+
             initData();
-            for(int i = 0; i < tableHeader.size(); i++){
-
-
-            }
             tableTemplate.setItems(opData);
-
             row++;
         }
     }
 
     private void initData() {
-
-        opData.add(new Accaunt(properties));
+        opData.add(new Accaunt(id,
+                firstName,
+                secondName,
+                fathersName,
+                birthDate,
+                birthPlace,
+                street,
+                house,
+                block,
+                flat,
+                square,
+                other));
     }
 
 

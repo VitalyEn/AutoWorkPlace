@@ -21,6 +21,18 @@
          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
       </columnResizePolicy>
       <columns>
+          <TableColumn fx:id="tableId" minWidth="20" text="№" />
+          <TableColumn fx:id="tableFirstName" prefWidth="75.0" text="Фамилия" />
+          <TableColumn fx:id="tableSecondName" prefWidth="75.0" text="Имя" />
+          <TableColumn fx:id="tableFathersName" prefWidth="75.0" text="Отчество" />
+          <TableColumn fx:id="tableBirthDate" prefWidth="75.0" text="Дата рождения" />
+          <TableColumn fx:id="tableBirthPlace" prefWidth="75.0" text="Место рождения" />
+          <TableColumn fx:id="tableStreet" prefWidth="75.0" text="Улица" />
+          <TableColumn fx:id="tableHouse" prefWidth="75.0" text="Дом" />
+          <TableColumn fx:id="tableBlock" prefWidth="75.0" text="Корпус" />
+          <TableColumn fx:id="tableFlat" prefWidth="75.0" text="№ Квартиры" />
+          <TableColumn fx:id="tableSquare" prefWidth="75.0" text="Площадь" />
+          <TableColumn fx:id="tableOther" minWidth="100.0" text="Другие данные" />
       </columns>
    </TableView>
    <Label text="Шаблон" />
