@@ -18,6 +18,7 @@ import java.util.ResourceBundle;
 
 public class FormController implements Initializable {
     public ObservableList<com.autoWorkPlace.Accaunt> opData = FXCollections.observableArrayList();
+    public com.autoWorkPlace.ExcelDocument exel;
     private Integer id;
     private String firstName;
     private String secondName;
@@ -82,6 +83,8 @@ public class FormController implements Initializable {
     private int rowSize;
 
 
+
+
     //Инициализация при загрузке формы
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -97,6 +100,8 @@ public class FormController implements Initializable {
         tableFlat.setCellValueFactory(new PropertyValueFactory<>("flat"));
         tableSquare.setCellValueFactory(new PropertyValueFactory<>("square"));
         tableOther.setCellValueFactory(new PropertyValueFactory<>("other"));
+
+
     }
 
     @FXML
@@ -124,11 +129,11 @@ public class FormController implements Initializable {
     }
     //Загрузка таблицы
     private void tableLoad() {
-
+        exel = new ExcelDocument();
         columns = new ArrayList<>();
         // Открытие нового докусента Exel (только первый лист!)
         if (tableTemplate.getItems() != null) tableTemplate.getItems().clear();
-        com.autoWorkPlace.ExcelDocument exel = new ExcelDocument();
+
         int row = 1;
         tableHeader = exel.readRow(0);
         rowSize = tableHeader.size();
@@ -188,12 +193,17 @@ properties = new HashMap<>();
         int idSelected = tableTemplate.getSelectionModel().getSelectedIndex();
         String[] tempRow = new String[rowSize];
         String[] targRow = new String[rowSize];
+
+
         for (int i = 0; i < rowSize; i++){
-            tempRow[i] = tableTemplate.getColumns().get(i).getCellData(0).toString().trim();
-            targRow[i] = tableTemplate.getColumns().get(i).getCellData(idSelected).toString().trim();
+            tempRow[i] = exel.readRow(0).get(i).toString().trim();
+            targRow[i] = exel.readRow(idSelected+1).get(i).toString().trim();
+            System.out.print(tempRow[i]+" ");
+            System.out.println(targRow[i]);
             //System.out.println(tempRow[i]+"   "+targRow[i]);
         }
-
+System.out.println(tempRow.toString());
+        System.out.println(targRow.toString());
         try {
             resultText.setText(doc.replaceAndWrite(tempRow, targRow));
             onSaveText.setText(" Документ создан");
