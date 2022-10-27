@@ -100,8 +100,9 @@ public class FormController implements Initializable {
         tableFlat.setCellValueFactory(new PropertyValueFactory<>("flat"));
         tableSquare.setCellValueFactory(new PropertyValueFactory<>("square"));
         tableOther.setCellValueFactory(new PropertyValueFactory<>("other"));
-
-
+        NumToString numtostr = new NumToString();
+        numtostr.setNumber(1745657746);
+       // System.out.println(numtostr.getString());
     }
 
     @FXML
