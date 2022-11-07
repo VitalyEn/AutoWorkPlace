@@ -58,13 +58,18 @@ public class NumToString {
             for(int j = 0; j < i; j++){
                 num *= 10;
             }
-            System.out.println(num);
+            if (num > 1000000) num /= 1000000;
+            else
+            if (num > 1000) num /= 1000;
+
+            System.out.print(num + " ");
+            System.out.println(this.table.get(num));
         }
     }
 
     public String getString() {
         for(int i = 0; i < this.number.size(); i++){
-string = string + table.get(i);
+            string = string + table.get(i);
         }
 
         return string;
